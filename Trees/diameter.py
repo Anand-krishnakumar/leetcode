@@ -17,45 +17,24 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution(object):
     def diameterOfBinaryTree(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
+        self.result = 0
         def maxDepth(node):
             if node is None:
                 return 0
-            else:
-                return 1 + max(maxDepth(node.left), maxDepth(node.right))
-        def maxNodeLength(node):
-            if node is None:
-                return 0
-            if node.left and node.right:
-                return maxDepth(node.left) + maxDepth(node.right)
-            elif node.left:
-                return maxDepth(node.left)
-            elif node.right:
-                return maxDepth(node.right)
-            else:
-                return 0
-        if root is None:
-            return 0
-        stack = []
-        stack.append(root)
-        _max = 0
-        while len(stack) > 0:
-            node = stack.pop()
-            k = maxNodeLength(node)
-        
-            if k > _max:
-                _max = k
-            if node.right:
-                stack.append(node.right)
-            if node.left:
-                stack.append(node.left)
-                
-        return _max
+            lsum = maxDepth(node.left)
+            rsum = maxDepth(node.right)
+            if lsum + rsum > self.result:
+                self.result = lsum+rsum
+            return 1 + max(lsum, rsum)
+        maxDepth(root)
+        return self.result
                 
         
         
